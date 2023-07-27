@@ -1,0 +1,78 @@
+// 데이터 베이스 생성법
+// 1) npm install mysql2 sequelize sequelize-cli
+
+// 2) npx sequelize init (config)
+
+// 3) config.json 가서 패스워드랑 db이름 변경후
+//  npx sequelize db:create --env development
+
+
+
+// 모델과 테이블 생성
+// 1) npx sequelize model:generate --name Member --attributes name:string,team:string,position:string,emailAddress:string,phoneNumber:string,admissionDate:date,birthday:date,profileImage:string
+
+// model:generate -> model을 생성할거야
+// medel의 이름은 Member
+// 각각의 속성이름, 데이터타입(int, sting, date)
+// id는 기본으로 생성됨 
+
+// 2) migrations에 있는 js파일에 수정사항 수정뒤에
+// npx sequelize db:migrate
+
+
+
+// 테이블 지우기
+// 1) npx sequelize db:migrate:undo -> 테이블 지우기
+// (다시생성하기) : npx sequelize db:migrate
+
+
+
+// seed 데이터 넣기 (Members테이블은 지금은 텅텅 비어있는상태)
+// 1) npx sequelize seed:generate --name initialMembers
+// 2) seedrs 파일에 멤버 넣기
+// 3) npx sequelize db:seed:all  ->시드파일 적용
+
+
+// 모델과 테이블 연동하기
+// 1) models안에 있는 members.js 주석 지우기
+// 2) migration에 있는 id복사해서 members에 붙여놓기 후 sequlize -> DataTypes로
+// 3) models안에 있는 index로 가서 다 지운후 타이핑
+// 4) app.js로 가서 아래 코드 추가
+//const db = require('./models'); //"./models/index" 에서 index생략 가능
+//const {Member} = db;  
+
+
+
+// 직원정보 조회
+// app.js에서 아래 코드 추가
+// const members = Member.findAll(); // 모델과 테이블 연동후 작업
+// 그외 await , async 넣기
+// npm run dev
+// test.http 에서 GET send request클릭 -> sql문으로 변환
+// http://localhost:3000/api/members?team=engineering
+
+
+
+// 특정 직원 정보조회
+// app.get함수 에서 코드수정
+//     const member = await Member.findOne( {where : {id }})   
+// npm run dev -> test.http 에서 
+//  http://localhost:3000/api/members/1
+
+
+
+// 새 직원 정보 추가하기
+// app.post 함수에서 코드수정
+//  const member = Member.build(newMember); 
+//  await member.save()                       
+// http에서 "post" requset 버튼클릭
+// * 참고로 id설정은 안해도됨
+
+
+
+// 기존 직원 정보 수정하기
+// app.put 함수 코드수정
+// const result = await Member.update(newInfo, { where : {id}})
+//if (result[0]) {                                        
+//    res.send({ message : `${result[0]} row(s) affected`})      
+// * http에서 변경할 값만 적어도됨

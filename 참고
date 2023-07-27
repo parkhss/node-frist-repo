@@ -1,0 +1,15 @@
+//packge.json에서
+
+//"scripts" : {
+//    "test" : echo \ "Error:no test specified\" && exit 1"
+//},
+
+// 을 수정
+
+//"scripts": {
+//    "start": "node app.js", 
+//    "dev": "nodemon app.js"
+//  }, 
+
+// npm start시 : 서버 실행
+// npm run dev : nodemon실행
